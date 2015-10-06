@@ -12,6 +12,9 @@ class Rater(models.Model):
 
 
 class Movies(models.Model):
+    class Meta:
+        verbose_name_plural = 'movies'
+
     movie_id = models.CharField(max_length=11)
     title = models.CharField(max_length=255)
     action = models.BooleanField()
@@ -35,7 +38,9 @@ class Movies(models.Model):
 
 
 class Ratings(models.Model):
-    # userId,movieId,rating,timestamp
+    class Meta:
+        verbose_name_plural = 'ratings'
+
     rater = models.ForeignKey(Rater)
     movid_id = models.ForeignKey(Movies)
     rating = models.FloatField()
