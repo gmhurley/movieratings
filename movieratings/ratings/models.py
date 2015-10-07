@@ -21,7 +21,7 @@ class Rater(models.Model):
     def __str__(self):
         return 'Age: {}  Occupation: {}  Zip: {}'.format(self.age,
                                                          self.occupation,
-                                                         self.zip)
+                                                         self.zip_code)
 
 
 class Movies(models.Model):
