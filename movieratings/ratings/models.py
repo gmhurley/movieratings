@@ -139,8 +139,8 @@ def load_ml_occupations():
 
 
 def load_ml_movies():
-    import json
     import csv
+    import json
 
     movies = []
 
@@ -189,3 +189,29 @@ def load_ml_movies():
 
         with open('movies.json', 'w') as f:
             f.write(json.dumps(movies))
+
+
+def load_ml_ratings():
+    import csv
+    import json
+
+    ratings = []
+
+    with open('ml-1m/ratings.dat') as f:
+        reader = csv.DictReader([line.replace('::', '\t') for line in f],
+                                fieldnames='UserID::MovieID::Rating::Timestamp'.split('::'),
+                                delimiter='\t')
+        for row in reader:
+            rating = {
+                'fields': {
+                    'rating': row['Rating'],
+                    'movie_id': row['MovieID'],
+                    'rater_id': row['UserID'],
+                },
+                'model': 'ratings.Ratings',
+            }
+
+            ratings.append(rating)
+
+        with open('ratings.json', 'w') as f:
+            f.write(json.dumps(ratings))
