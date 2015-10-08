@@ -48,6 +48,12 @@ class Movies(models.Model):
     war = models.BooleanField()
     western = models.BooleanField()
 
+    def average_rating(self):
+        return self.ratings_set.aggregate(models.Avg('rating'))['rating__avg']
+
+    def num_ratings(self):
+        return self.ratings_set.aggregate(models.Count('rating'))['rating__count']
+
     def __str__(self):
         return self.title
 
