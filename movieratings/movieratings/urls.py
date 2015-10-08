@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^movie/(?P<movie_id>\d+)$', views.movie_detail, name='movie'),
     url(r'^user/(?P<rater_id>\d+)$', views.rater_detail, name='user'),
+    url(r'$', views.top_movies, name='top_movies'),
 ]
