@@ -10,6 +10,6 @@ Number of Ratings: {{ movie.num_ratings }}</p>
 
 <ul>
 {% for rating in movie.ratings_set.all %}
-    <li><a href="#">{{ rating.rater.id }}</a>: {{ rating.rating|floatformat }}</li>
+    <li><a href="{% url 'user' rating.rater.id %}">{{ rating.rater.id }}</a>: {{ rating.rating|floatformat }}</li>
 {% endfor %}
 </ul>
