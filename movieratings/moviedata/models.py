@@ -23,10 +23,10 @@ class Rater(models.Model):
     X = 'X'
 
     GENDER_CHOICES = (
-        (MALE, 'Male',
-         FEMALE, 'Female',
-         OTHER, 'Other',
-         X, 'No answer')
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (OTHER, 'Other'),
+        (X, 'No answer')
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     age_group = models.PositiveSmallIntegerField()
@@ -44,8 +44,7 @@ class Ratings(models.Model):
         return str(self.id)
 
 
-class Genres(models.Model):
-    movie_id = models.ForeignKey(Movies)
+class Movie_Genres(models.Model):
     action = models.BooleanField()
     adventure = models.BooleanField()
     animation = models.BooleanField()
