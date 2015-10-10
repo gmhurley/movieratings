@@ -122,3 +122,25 @@ def import_movies():
 
         with open('moviedata/fixtures/genres.json', 'w') as f:
             f.write(json.dumps(movies_genres))
+
+def import_ratings():
+    import csv
+    import json
+
+    ratings = []
+
+    field_names = 'UserID::MovieID::Rating::Timestamp'
+
+    with open(ml_dir + '/ratings.dat') as f:
+        reader = csv.DictReader([line.replace("::", '\t') for line in f],
+                                fieldnames=field_names.split('::'),
+                                delimiter='\t')
+        for row in reader:
+            rating = {'fields': {'rating': row['Rating'],
+                               'rater': row['UserID'],
+                               'movie': row['MovieID']},
+                    'model': 'moviedata.Ratings'}
+            ratings.append(rating)
+
+    with open('moviedata/fixtures/ratings.json', 'w') as f:
+        f.write(json.dumps(ratings))
