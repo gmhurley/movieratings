@@ -7,6 +7,12 @@ class Movie(models.Model):
     """Represents the data IRT movies."""
     title = models.CharField(max_length=255)
 
+    def avg_rating(self):
+        return self.rating_set.aggregate(models.Avg('rating'))['rating__avg']
+
+    def num_ratings(self):
+        return self.rating_set.aggregate(models.Count('rating'))['rating__count']
+
     def __str__(self):
         return str(self.title)
 
