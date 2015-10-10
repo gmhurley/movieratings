@@ -29,7 +29,7 @@ class Rater(models.Model):
          X, 'No answer')
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    age = models.PositiveSmallIntegerField()
+    age_group = models.PositiveSmallIntegerField()
     occupation = models.ForeignKey(Occupation)
     zipcode = models.CharField(max_length=10)
 
@@ -42,3 +42,25 @@ class Ratings(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Genres(models.Model):
+    movie_id = models.ForeignKey(Movies)
+    action = models.BooleanField()
+    adventure = models.BooleanField()
+    animation = models.BooleanField()
+    childrens = models.BooleanField()
+    comedy = models.BooleanField()
+    crime = models.BooleanField()
+    documentary = models.BooleanField()
+    drama = models.BooleanField()
+    fantasy = models.BooleanField()
+    film_noir = models.BooleanField()
+    horror = models.BooleanField()
+    musical = models.BooleanField()
+    mystery = models.BooleanField()
+    romance = models.BooleanField()
+    sci_fi = models.BooleanField()
+    thriller = models.BooleanField()
+    war = models.BooleanField()
+    western = models.BooleanField()
