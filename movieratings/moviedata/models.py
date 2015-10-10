@@ -3,15 +3,20 @@ from django.db import models
 # Create your models here.
 
 
-class Movies(models.Model):
+class Movie(models.Model):
     """Represents the data IRT movies."""
     title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return str(self.title)
 
 
 class Occupation(models.Model):
     """List of the available occupations."""
     title = models.CharField(max_length = 55)
 
+    def __str__(self):
+        return str(self.title)
 
 class Rater(models.Model):
     """Represents the users that have rated movies."""
@@ -33,18 +38,22 @@ class Rater(models.Model):
     occupation = models.ForeignKey(Occupation)
     zipcode = models.CharField(max_length=10)
 
+    def __str__(self):
+        return str("{}: {}: {}: {}".format(self.gender, self.age_group,
+                                           self.occupation, self.zipcode))
 
-class Ratings(models.Model):
+
+class Rating(models.Model):
     """Represents users ratings of movies."""
     rating = models.PositiveSmallIntegerField()
     rater = models.ForeignKey(Rater)
-    movie = models.ForeignKey(Movies)
+    movie = models.ForeignKey(Movie)
 
     def __str__(self):
-        return str(self.id)
+        return str("{}: {}: {}".format(self.movie, self.rater, self.rating))
 
 
-class Movie_Genres(models.Model):
+class Movie_Genre(models.Model):
     action = models.BooleanField()
     adventure = models.BooleanField()
     animation = models.BooleanField()
