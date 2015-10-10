@@ -1,0 +1,37 @@
+<h1>{{ user.id }}</h1>
+
+
+<table border="1">
+    <tr>
+        <td>Gender</td>
+        <td>{{ user.gender }}
+    </tr>
+    <tr>
+        <td>Age</td>
+        <td>{{ user.age }}
+    </tr>
+    <tr>
+        <td>Occupation</td>
+        <td>{{ user.occupation }}
+    </tr>
+    <tr>
+        <td>Zip Code</td>
+        <td>{{ user.zipcode }}
+    </tr>
+</table>
+
+
+<h2>Ratings</h2>
+
+<table border="1">
+    <tr>
+        <th>Movie</th>
+        <th>Rating</th>
+    </tr>
+    {% for rating in user.rating_set.all %}
+        <tr>
+            <td><a href='{%  url "movie" rating.movie.id  %}'>{{ rating.movie.title }}</a></td>
+            <td>{{ rating.rating|floatformat }}</td>
+        </tr>
+    {% endfor %}
+</table>
