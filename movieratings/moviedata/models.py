@@ -41,10 +41,10 @@ class Rater(models.Model):
         (X, 'No answer')
     )
     user = models.OneToOneField(User, primary_key=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    age_group = models.PositiveSmallIntegerField()
-    occupation = models.ForeignKey(Occupation)
-    zipcode = models.CharField(max_length=10)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    age_group = models.PositiveSmallIntegerField(blank=True, null=True)
+    occupation = models.ForeignKey(Occupation, blank=True, null=True)
+    zipcode = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
         return str("{}: {}: {}: {}".format(self.gender, self.age_group,

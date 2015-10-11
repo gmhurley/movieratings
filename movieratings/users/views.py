@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 from .forms import UserForm
+from moviedata.models import Rater
 
 # Create your views here.
 
@@ -39,7 +40,12 @@ def user_registration(request):
             password = user.password
 
             user.set_password(password)
+
+            # linking to profile
+            rater = Rater()
+            rater.user = user
             user.save()
+            rater.save()
 
             user = authenticate(username=user.username,
                                 password=password)
