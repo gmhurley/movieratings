@@ -98,7 +98,7 @@ def import_movies():
             movie = {
                 'fields': {
                     'title': row['Title']},
-                'model': 'moviedata.Movies',
+                'model': 'moviedata.Movie',
                 'pk': row['MovieID'],
             }
 
@@ -123,7 +123,7 @@ def import_movies():
                     'war': False,
                     'western': False,
                 },
-                'model': 'moviedata.Movie_Genres',
+                'model': 'moviedata.Movie_Genre',
                 'pk': row['MovieID']
             }
             # set genre to True if it's in the genre list
@@ -157,7 +157,7 @@ def import_ratings():
             rating = {'fields': {'rating': row['Rating'],
                                'rater': row['UserID'],
                                'movie': row['MovieID']},
-                    'model': 'moviedata.Ratings'}
+                    'model': 'moviedata.Rating'}
             ratings.append(rating)
 
     with open('moviedata/fixtures/ratings.json', 'w') as f:

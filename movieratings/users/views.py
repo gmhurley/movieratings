@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 from .forms import UserForm
 
@@ -15,6 +16,9 @@ def user_login(request):
 
         if user is not None and user.is_active:
             login(request, user)
+            messages.add_message(request,
+                                 messages.SUCCESS,
+                                 "You are now logged in as {}".format(user.username))
             return redirect('index')
         else:
             return render(request,
