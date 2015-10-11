@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -39,6 +40,7 @@ class Rater(models.Model):
         (OTHER, 'Other'),
         (X, 'No answer')
     )
+    user = models.OneToOneField(User, primary_key=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     age_group = models.PositiveSmallIntegerField()
     occupation = models.ForeignKey(Occupation)

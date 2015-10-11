@@ -1,3 +1,8 @@
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from faker import Faker
+
+fake = Faker()
 ml_dir = '../ml-1m'
 
 def import_users():
@@ -13,13 +18,26 @@ def import_users():
                                 fieldnames=field_names.split('::'),
                                 delimiter='\t')
         for row in reader:
+            while True:
+                email = fake.email()
+                if User.objects.filter(username=email):
+                    continue
+                else:
+                    break
+            auth_user = User.objects.create_user(username=email,
+                                                 email=email,
+                                                 password=make_password('password'),
+                                                 first_name=fake.first_name(),
+                                                 last_name=fake.last_name())
+
             user = {'fields': {'gender': row['Gender'],
                                'age_group': row['Age'],
                                'occupation': row['Occupation'],
                                'zipcode': row['Zip-code']},
                     'model': 'moviedata.Rater',
-                    'pk': int(row['UserID'])}
+                    'pk': auth_user.pk}
             users.append(user)
+            auth_user.save()
 
     with open('moviedata/fixtures/users.json', 'w') as f:
         f.write(json.dumps(users))
