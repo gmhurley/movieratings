@@ -11,10 +11,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Movies',
+            name='Genres',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
                 ('action', models.BooleanField()),
                 ('adventure', models.BooleanField()),
                 ('animation', models.BooleanField()),
@@ -34,37 +33,43 @@ class Migration(migrations.Migration):
                 ('war', models.BooleanField()),
                 ('western', models.BooleanField()),
             ],
-            options={
-                'verbose_name_plural': 'movies',
-            },
+        ),
+        migrations.CreateModel(
+            name='Movies',
+            fields=[
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('title', models.CharField(max_length=255)),
+            ],
         ),
         migrations.CreateModel(
             name='Occupation',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('title', models.CharField(max_length=55)),
             ],
         ),
         migrations.CreateModel(
             name='Rater',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('age', models.IntegerField(null=True)),
-                ('gender', models.CharField(max_length=1)),
-                ('zip_code', models.CharField(max_length=10)),
-                ('occupation', models.ForeignKey(to='ratings.Occupation')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other'), ('X', 'No answer')], max_length=1)),
+                ('age_group', models.PositiveSmallIntegerField()),
+                ('zipcode', models.CharField(max_length=10)),
+                ('occupation', models.ForeignKey(to='moviedata.Occupation')),
             ],
         ),
         migrations.CreateModel(
             name='Ratings',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
-                ('rating', models.FloatField()),
-                ('movie', models.ForeignKey(to='ratings.Movies')),
-                ('rater', models.ForeignKey(to='ratings.Rater')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('rating', models.PositiveSmallIntegerField()),
+                ('movie', models.ForeignKey(to='moviedata.Movies')),
+                ('rater', models.ForeignKey(to='moviedata.Rater')),
             ],
-            options={
-                'verbose_name_plural': 'ratings',
-            },
+        ),
+        migrations.AddField(
+            model_name='genres',
+            name='movie_id',
+            field=models.ForeignKey(to='moviedata.Movies'),
         ),
     ]

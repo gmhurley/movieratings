@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-import ratings.views as views
+from users.views import user_login, user_registration, user_logout
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^movie/(?P<movie_id>\d+)$', views.movie_detail, name='movie'),
-    url(r'^user/(?P<rater_id>\d+)$', views.rater_detail, name='user'),
-    url(r'$', views.top_movies, name='top_movies'),
+    url(r'^login/$', user_login, name='user_login'),
+    url(r'^logout/$', user_logout, name='user_logout'),
+    url(r'^register/$', user_registration, name='user_registration'),
+    url(r'', include('moviedata.urls'))
 ]
