@@ -8,6 +8,7 @@ Number of Ratings: {{ movie.num_ratings }}</p>
 {% if user.is_authenticated %}
     <h3>Your Rating</h3>
     {{ user_rating }}
+    <a href="{% url 'user_rating' movie.id %}">Update Rating</a>
 {% endif %}
 
 <h3>How Others Rated</h3>
