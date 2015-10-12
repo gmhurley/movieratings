@@ -27,7 +27,6 @@ class Occupation(models.Model):
 
 class Rater(models.Model):
     """Represents the users that have rated movies."""
-    # Gender::Age::Occupation::Zip-code
 
     MALE = 'M'
     FEMALE = 'F'
@@ -53,7 +52,16 @@ class Rater(models.Model):
 
 class Rating(models.Model):
     """Represents users ratings of movies."""
-    rating = models.PositiveSmallIntegerField()
+
+    RATING_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5')
+    )
+
+    rating = models.PositiveSmallIntegerField(max_length=1, choices=RATING_CHOICES)
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
 

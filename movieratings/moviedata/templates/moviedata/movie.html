@@ -5,8 +5,10 @@
 <p>Average Rating: {{ movie.avg_rating|floatformat }}<br/>
 Number of Ratings: {{ movie.num_ratings }}</p>
 
-<h3>Your Rating</h3>
-{{ user_rating }}
+{% if user.is_authenticated %}
+    <h3>Your Rating</h3>
+    {{ user_rating }}
+{% endif %}
 
 <h3>How Others Rated</h3>
 
