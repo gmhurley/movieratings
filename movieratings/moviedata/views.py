@@ -18,11 +18,11 @@ def movie_detail(request, movie_id):
                    'user_rating': user_rating})
 
 def user_detail(request, user_id):
-    user = Rater.objects.get(pk=user_id)
+    rater = Rater.objects.get(pk=user_id)
 
     return render(request,
                   'moviedata/user.html',
-                  {'user': user})
+                  {'rater': rater})
 
 
 def top_movies(request):
