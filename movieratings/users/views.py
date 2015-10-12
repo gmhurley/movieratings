@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from .forms import UserForm
@@ -59,3 +59,7 @@ def user_registration(request):
                   {'form': form}
 
     )
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')

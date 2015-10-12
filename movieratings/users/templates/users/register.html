@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h2>Register</h2>
 
 <form method="POST" action="{%  url 'user_registration' %}">
@@ -5,3 +8,4 @@
     {{ form.as_p }}
     <input type="submit" value='Register'>
 </form>
+{% endblock %}

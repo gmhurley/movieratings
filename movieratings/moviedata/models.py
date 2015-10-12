@@ -58,7 +58,7 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie)
 
     def __str__(self):
-        return str("{}: {}: {}".format(self.movie, self.rater, self.rating))
+        return str(self.rating)
 
 
 class Movie_Genre(models.Model):

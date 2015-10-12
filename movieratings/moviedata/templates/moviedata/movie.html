@@ -1,12 +1,25 @@
-<h1>{{ movie.title }}</h1>
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ movie.title }}</h2>
 
 <p>Average Rating: {{ movie.avg_rating|floatformat }}<br/>
 Number of Ratings: {{ movie.num_ratings }}</p>
 
-<h2>Ratings</h2>
+<h3>Your Rating</h3>
+{{ user_rating }}
 
-<ul>
+<h3>How Others Rated</h3>
+
+<table border="1">
+    <tr>
+        <th>Email</th>
+        <th>Rating</th>
+    </tr>
     {% for rating in movie.rating_set.all %}
-        <li><a href='{%  url 'user' rating.rater.id  %}'>{{ rating.rater.id }}</a>: {{ rating.rating|floatformat }}</li>
+    <tr>
+        <td><a href="{%  url 'user' rating.rater.user.id  %}">{{ rating.rater.user.username }}</td>
+        <td>{{ rating.rating|floatformat }}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
+{% endblock %}
