@@ -16,12 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from users.views import user_login, user_registration, user_logout
+from users.views import user_registration
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^login/$', user_login, name='user_login'),
-    url(r'^logout/$', user_logout, name='user_logout'),
     url(r'^register/$', user_registration, name='user_registration'),
+    url(r'^', include('django.contrib.auth.urls')),
     url(r'', include('moviedata.urls'))
 ]
