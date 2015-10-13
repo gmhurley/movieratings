@@ -61,7 +61,7 @@ class Rating(models.Model):
         (5, '5')
     )
 
-    rating = models.PositiveSmallIntegerField(max_length=1, choices=RATING_CHOICES)
+    rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     review = models.CharField(max_length=255, blank=True, null=True)
