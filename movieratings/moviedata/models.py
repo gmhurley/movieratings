@@ -4,9 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class Genre(models.Model):
+    title = models.CharField(max_length=25)
+
+
 class Movie(models.Model):
     """Represents the data IRT movies."""
     title = models.CharField(max_length=255)
+    genres = models.ManyToManyField(Genre)
 
     def avg_rating(self):
         return self.rating_set.aggregate(models.Avg('rating'))['rating__avg']
@@ -69,24 +74,3 @@ class Rating(models.Model):
 
     def __str__(self):
         return str(self.rating)
-
-
-class Movie_Genre(models.Model):
-    action = models.BooleanField()
-    adventure = models.BooleanField()
-    animation = models.BooleanField()
-    childrens = models.BooleanField()
-    comedy = models.BooleanField()
-    crime = models.BooleanField()
-    documentary = models.BooleanField()
-    drama = models.BooleanField()
-    fantasy = models.BooleanField()
-    film_noir = models.BooleanField()
-    horror = models.BooleanField()
-    musical = models.BooleanField()
-    mystery = models.BooleanField()
-    romance = models.BooleanField()
-    sci_fi = models.BooleanField()
-    thriller = models.BooleanField()
-    war = models.BooleanField()
-    western = models.BooleanField()

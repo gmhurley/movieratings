@@ -85,61 +85,50 @@ def import_movies():
     import json
 
     movies = []
-    movies_genres = []
 
     with open(ml_dir + '/movies.dat', encoding='Windows-1252') as f:
         reader = csv.DictReader([line.replace('::', '\t') for line in f],
                                 fieldnames='MovieID::Title::Genres'.split('::'),
                                 delimiter='\t')
 
+        genre_lookup = {"action": 1,
+                        "adventure": 2,
+                        "animation": 3,
+                        "childrens": 4,
+                        "comedy": 5,
+                        "crime": 6,
+                        "documentary": 7,
+                        "drama": 8,
+                        "fantasy": 9,
+                        "film_noir": 10,
+                        "horror": 11,
+                        "musical": 12,
+                        "mystery": 13,
+                        "romance": 14,
+                        "sci_fi": 15,
+                        "thriller": 16,
+                        "war": 17,
+                        "western": 18,}
+
         for row in reader:
             genres = (row['Genres'].split('|'))
+            genres = [x.lower().replace("'", "").replace("-", "_") for x in genres]
+            num_genres = [genre_lookup[x] for x in genres]
+
 
             movie = {
                 'fields': {
-                    'title': row['Title']},
+                    'title': row['Title'],
+                    'genres': num_genres},
                 'model': 'moviedata.Movie',
                 'pk': row['MovieID'],
             }
 
-            movie_genres = {
-                'fields':{
-                    'action': False,
-                    'adventure': False,
-                    'animation': False,
-                    'childrens': False,
-                    'comedy': False,
-                    'crime': False,
-                    'documentary': False,
-                    'drama': False,
-                    'fantasy': False,
-                    'film_noir': False,
-                    'horror': False,
-                    'musical': False,
-                    'mystery': False,
-                    'romance': False,
-                    'sci_fi': False,
-                    'thriller': False,
-                    'war': False,
-                    'western': False,
-                },
-                'model': 'moviedata.Movie_Genre',
-                'pk': row['MovieID']
-            }
-            # set genre to True if it's in the genre list
-            for genre in genres:
-                for k in movie_genres['fields'].keys():
-                    if k.startswith(genre[:4].lower()):
-                        movie_genres['fields'][k] = True
-
             movies.append(movie)
-            movies_genres.append(movie_genres)
+
 
         with open('moviedata/fixtures/movies.json', 'w') as f:
             f.write(json.dumps(movies))
-
-        with open('moviedata/fixtures/genres.json', 'w') as f:
-            f.write(json.dumps(movies_genres))
 
 def import_ratings():
     import csv
@@ -162,3 +151,22 @@ def import_ratings():
 
     with open('moviedata/fixtures/ratings.json', 'w') as f:
         f.write(json.dumps(ratings))
+
+
+def import_genres():
+    import json
+
+    genres_load = []
+
+    genres = ['action', 'adventure', 'animation', 'childrens', 'comedy',
+              'crime', 'documentary', 'drama', 'fantasy', 'film_noir', 'horror',
+              'musical', 'mystery', 'romance', 'sci_fi', 'thriller', 'war',
+              'western']
+
+    for x in genres:
+        genre = {'fields': {'title': x},
+                 'model': 'moviedata.Genre'}
+        genres_load.append(genre)
+
+    with open('moviedata/fixtures/genres.json', 'w') as f:
+        f.write(json.dumps(genres_load))
