@@ -64,6 +64,7 @@ class Rating(models.Model):
     rating = models.PositiveSmallIntegerField(max_length=1, choices=RATING_CHOICES)
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.rating)
