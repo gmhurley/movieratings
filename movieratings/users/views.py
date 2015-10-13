@@ -7,30 +7,6 @@ from moviedata.models import Rater
 
 # Create your views here.
 
-
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(username=username, password=password)
-
-        if user is not None and user.is_active:
-            login(request, user)
-            messages.add_message(request,
-                                 messages.SUCCESS,
-                                 "You are now logged in as {}".format(user.username))
-            return redirect('index')
-        else:
-            return render(request,
-                          'users/login.html',
-                          {'failed': True,
-                           'username': username})
-
-
-    return render(request,
-                  'users/login.html')
-
 def user_registration(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -55,7 +31,7 @@ def user_registration(request):
     else:
         form = UserForm()
     return render(request,
-                  'users/register.html',
+                  'registration/register.html',
                   {'form': form}
 
     )

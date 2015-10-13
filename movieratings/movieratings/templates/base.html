@@ -6,9 +6,9 @@
 <h1>TIY Movie Database</h1>
 <body>
     {% if user.is_authenticated %}
-      <p>Welcome, <a href="{%  url 'user' user.id  %}">{{ user.username }}</a>  <a href="{% url 'user_logout' %}">[logout]</a></p>
+      <p>Welcome, <a href="{%  url 'user' user.id  %}">{{ user.username }}</a>  <a href="{% url 'logout' %}">[logout]</a></p>
     {% else %}
-      <p>Welcome, Guest <a href="{% url 'user_login' %}">[login]</a></p>
+      <p>Welcome, Guest <a href="{% url 'login' %}?next={{request.path}}">[login]</a></p>
     {% endif %}
   {% block content %}
   {% endblock %}
