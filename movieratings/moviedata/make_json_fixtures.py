@@ -1,4 +1,5 @@
-from django.contrib.auth.hashers import make_password
+import pytz
+
 from django.contrib.auth.models import User
 from faker import Faker
 
@@ -20,15 +21,16 @@ def import_users():
         for row in reader:
             while True:
                 email = fake.email()
-                if User.objects.filter(username=email):
+                username = fake.user_name()
+                if User.objects.filter(username=username) or User.objects.filter(email=email):
                     continue
                 else:
                     break
-            auth_user = User.objects.create_user(username=email,
+            auth_user = User.objects.create_user(username=username,
                                                  email=email,
-                                                 password=make_password('password'),
                                                  first_name=fake.first_name(),
                                                  last_name=fake.last_name())
+            auth_user.set_password('password')
 
             user = {'fields': {'gender': row['Gender'],
                                'age_group': row['Age'],
@@ -145,7 +147,8 @@ def import_ratings():
         for row in reader:
             rating = {'fields': {'rating': row['Rating'],
                                'rater': row['UserID'],
-                               'movie': row['MovieID']},
+                               'movie': row['MovieID'],
+                                   'timestamp': pytz.utc.localize(fake.date_time_this_decade()).strftime('%Y-%m-%d %H:%M:%S%z')},
                     'model': 'moviedata.Rating'}
             ratings.append(rating)
 
