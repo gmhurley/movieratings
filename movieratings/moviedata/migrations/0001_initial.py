@@ -2,18 +2,27 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('auth', '0006_require_contenttypes_0002'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Genres',
+            name='Movie',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('title', models.CharField(max_length=255)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Movie_Genre',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
                 ('action', models.BooleanField()),
                 ('adventure', models.BooleanField()),
                 ('animation', models.BooleanField()),
@@ -35,41 +44,31 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Movies',
-            fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('title', models.CharField(max_length=255)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Occupation',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
                 ('title', models.CharField(max_length=55)),
             ],
         ),
         migrations.CreateModel(
             name='Rater',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('gender', models.CharField(choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other'), ('X', 'No answer')], max_length=1)),
-                ('age_group', models.PositiveSmallIntegerField()),
-                ('zipcode', models.CharField(max_length=10)),
-                ('occupation', models.ForeignKey(to='moviedata.Occupation')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, serialize=False, primary_key=True)),
+                ('gender', models.CharField(blank=True, choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other'), ('X', 'No answer')], null=True, max_length=1)),
+                ('age_group', models.PositiveSmallIntegerField(blank=True, null=True)),
+                ('zipcode', models.CharField(blank=True, null=True, max_length=10)),
+                ('occupation', models.ForeignKey(to='moviedata.Occupation', null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Ratings',
+            name='Rating',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('rating', models.PositiveSmallIntegerField()),
-                ('movie', models.ForeignKey(to='moviedata.Movies')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('rating', models.PositiveSmallIntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])),
+                ('review', models.CharField(blank=True, null=True, max_length=255)),
+                ('timestamp', models.DateTimeField(auto_now_add=True)),
+                ('movie', models.ForeignKey(to='moviedata.Movie')),
                 ('rater', models.ForeignKey(to='moviedata.Rater')),
             ],
-        ),
-        migrations.AddField(
-            model_name='genres',
-            name='movie_id',
-            field=models.ForeignKey(to='moviedata.Movies'),
         ),
     ]
