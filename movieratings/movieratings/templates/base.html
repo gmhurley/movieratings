@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TIY Movie Ratings</title>
+</head>
+<h1>TIY Movie Database</h1>
+<body>
+    {% if user.is_authenticated %}
+      <p>Welcome, <a href="{%  url 'user' user.id  %}">{{ user.username }}</a>  <a href="{% url 'user_logout' %}">[logout]</a></p>
+    {% else %}
+      <p>Welcome, Guest <a href="{% url 'user_login' %}">[login]</a></p>
+    {% endif %}
+  {% block content %}
+  {% endblock %}
+  <br>
+  <footer>Created in TIY Durham Python Cohort 5 (2105).</footer>
+</body>
+</html>
