@@ -1,15 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
-  <div class="container">
-    <h1>Welcome to the TIY Movie Database</h1>
-    <p>This site aims to provide you with recommendations on the next movie to watch based off of your prefences.
-       There are over <em>1 million</em> movie ratings.</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Register &raquo;</a></p>
+{% if request.user.is_authenticated %}
+  <style>
+    .container.main-body {padding-top: 60px}
+  </style>
+{% else %}
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Welcome to the TIY Movie Database</h1>
+      <p>This site aims to provide you with recommendations on the next movie to watch based off of your prefences.
+         There are over <em>1 million</em> movie ratings.</p>
+      <p><a class="btn btn-primary btn-lg" href="/register" role="button">Register &raquo;</a></p>
+    </div>
   </div>
-</div>
-
-<div class="container">
+{% endif %}
+<div class="container main-body">
   <!-- Example row of columns -->
   <div class="row">
     <div class="col-md-4">

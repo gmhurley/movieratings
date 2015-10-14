@@ -29,7 +29,6 @@
           <span class="navbar-right navbar-brand ">Welcome {{ request.user }}</span>
 
         {% else %}
-
           <form class="navbar-form navbar-right" role="login" action="{% url 'django.contrib.auth.views.login' %}" method='post'>
           {% csrf_token %}
             <div class="form-group">
@@ -40,8 +39,8 @@
             </div>
             <input type="hidden" name="next" value="{{ request.path }}">
             <button type="submit" class="btn btn-success">Sign in</button>
+            <a class="btn btn-primary" href="/register" role="button">Register &raquo;</a>
           </form>
-
         {% endif %}
       </div><!--/.navbar-collapse -->
     </div>
@@ -52,7 +51,7 @@
   {% endblock %}
 
  <footer>
-  <p>&copy; Company 2014</p>
+  <p>&copy; TIY Movie Database 2015</p>
 </footer>
   </div> <!-- /container -->
 
