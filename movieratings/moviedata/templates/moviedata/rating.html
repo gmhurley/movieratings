@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container" style="padding-top: 60px">
 <h3>Submit Rating for {{ movie.title }}</h3>
 
 <form method="POST" action="{% url 'user_rating' movie.id %}">
@@ -7,5 +8,5 @@
   {{ form.as_p }}
   <input type="submit" value="Submit">
 </form>
-
+</div>
 {% endblock %}

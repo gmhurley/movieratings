@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.db.models import Avg, Count
 from .models import Movie, Rater, Rating
 from django.contrib import messages
+from django.views import generic
 
 from .forms import RatingForm
 
@@ -24,12 +26,20 @@ def movie_detail(request, movie_id):
                   {'movie': movie,
                    'user_rating': user_rating})
 
+
 def user_detail(request, user_id):
     rater = Rater.objects.get(pk=user_id)
 
     return render(request,
                   'moviedata/user.html',
                   {'rater': rater})
+
+
+class RaterDetail(generic.ListView):
+    template_name = 'moviedata/user.html'
+
+    def get_rater(self):
+        return Rater.objects.get(pd=user_id)
 
 
 def top_movies(request):
@@ -39,9 +49,22 @@ def top_movies(request):
     movies = popular_movies.annotate(Avg('rating__rating')) \
                            .order_by('-rating__rating__avg')[:20]
 
+    # movies = movies.prefetch_related('rater')
+
+    paginator = Paginator(movies, 10)
+
+    page = request.GET.get('page')
+    try:
+        movies = paginator.page(page)
+    except PageNotAnInteger:
+        movies = paginator.page(1)
+    except EmptyPage:
+        movies = paginator.page(paginator.num_pages)
+
     return render(request,
                   'moviedata/index.html',
                   {'movies': movies})
+
 
 @login_required
 def user_rating(request, movie_id):

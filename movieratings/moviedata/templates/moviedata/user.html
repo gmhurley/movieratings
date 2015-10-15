@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container" style="padding-top: 60px">
 <h1>{{ rater.user.username }}</h1>
 
 <table border="1">
@@ -43,5 +44,6 @@
         </tr>
     {% endfor %}
 </table>
+</div>
 
 {% endblock %}
