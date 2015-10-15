@@ -9,7 +9,9 @@ class Genre(models.Model):
 
 
 class Movie(models.Model):
+
     """Represents the data IRT movies."""
+
     title = models.CharField(max_length=255)
     genres = models.ManyToManyField(Genre)
 
@@ -24,13 +26,17 @@ class Movie(models.Model):
 
 
 class Occupation(models.Model):
+
     """List of the available occupations."""
-    title = models.CharField(max_length = 55)
+
+    title = models.CharField(max_length=55)
 
     def __str__(self):
         return str(self.title)
 
+
 class Rater(models.Model):
+
     """Represents the users that have rated movies."""
 
     MALE = 'M'
@@ -56,6 +62,7 @@ class Rater(models.Model):
 
 
 class Rating(models.Model):
+
     """Represents users ratings of movies."""
 
     RATING_CHOICES = (

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container" style="padding-top: 60px">
 <h2>{{ movie.title }}</h2>
 
 <p>Average Rating: {{ movie.avg_rating|floatformat }}<br/>
@@ -20,9 +21,10 @@ Number of Ratings: {{ movie.num_ratings }}</p>
     </tr>
     {% for rating in movie.rating_set.all %}
     <tr>
-        <td><a href="{%  url 'user' rating.rater.user.id  %}">{{ rating.rater.user.username }}</td>
+        <td><a href="{%  url 'user' rating.rater.user.id  %}">{{ rating.rater.user.username }}</a></td>
         <td>{{ rating.rating|floatformat }}</td>
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endblock %}
